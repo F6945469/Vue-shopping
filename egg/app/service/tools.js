@@ -3,6 +3,8 @@
 const Service = require('egg').Service;
 const fs = require('fs')
 const svgCaptcha = require('svg-captcha') // 生成验证码
+const request = require('request');
+const querystring = require('querystring');
 class ToolsService extends Service {
     // 写入文件
     async writeFile(path, dataBuffer) {
@@ -44,8 +46,30 @@ class ToolsService extends Service {
             background: "#cc9966"
         });
         this.ctx.session.code = captcha.text;   /*验证码上面的信息*/
-        
+
         return captcha;
+    }
+
+    // 发送验证码
+    async sendCode(mobile, code) {
+        var queryData = querystring.stringify({
+            "mobile": mobile,  // 接受短信的用户手机号码
+            "tpl_id": "141071",  // 您申请的短信模板ID，根据实际情况修改
+            "tpl_value": `#code#=${code}`,  // 您设置的模板变量，根据实际情况修改
+            "key": "860287201a70b77eb745be3d7dd5b0f9",  // 应用APPKEY(应用详细页查询)
+        });
+
+        var queryUrl = 'http://v.juhe.cn/sms/send?' + queryData;
+        return Promise((resolve, rejecr) => {
+            request(queryUrl, function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var jsonObj = JSON.parse(body); // 解析接口返回的JSON内容
+                    resolve(jsonObj)
+                } else {
+                    rejecr('请求异常')
+                }
+            })
+        })
     }
 }
 
