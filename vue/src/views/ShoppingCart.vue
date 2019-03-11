@@ -51,14 +51,16 @@
             <p class="desc2" @click="goshop" v-if="userName">去购物</p>
             <p class="desc2" @click="goLogin" v-else>去登录</p>
         </div>
+        <BaseFooter active='2'/>
         <router-view/>
         <BaseLoding :showFlag="showFlag"/>
     </div>
 </template>
 
 <script>
-import Scroll from "@/components/public/Scroll";
+import Scroll from "public/Scroll";
 import { vuexData } from "js/mixin";
+import BaseFooter from 'public/BaseFooter'
 export default {
     name: "ShoppingCart",
     mixins: [vuexData],
@@ -91,7 +93,8 @@ export default {
         }
     },
     components: {
-        Scroll
+        Scroll,
+        BaseFooter
     },
     methods: {
         //全选

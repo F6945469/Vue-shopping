@@ -5,6 +5,7 @@ const fs = require('fs')
 const svgCaptcha = require('svg-captcha') // 生成验证码
 const request = require('request');
 const querystring = require('querystring');
+var sd = require('silly-datetime');
 class ToolsService extends Service {
     // 写入文件
     async writeFile(path, dataBuffer) {
@@ -60,7 +61,7 @@ class ToolsService extends Service {
         });
 
         var queryUrl = 'http://v.juhe.cn/sms/send?' + queryData;
-        return Promise((resolve, rejecr) => {
+        return new Promise((resolve, rejecr) => {
             request(queryUrl, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var jsonObj = JSON.parse(body); // 解析接口返回的JSON内容
@@ -70,6 +71,11 @@ class ToolsService extends Service {
                 }
             })
         })
+    }
+
+    async getDay() {
+        var day = sd.format(new Date(), 'YYYYMMDD');
+        return day;
     }
 }
 

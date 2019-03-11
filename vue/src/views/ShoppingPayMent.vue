@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import GoodsList from '@/components/public/GoodsList'
+import GoodsList from 'public/GoodsList'
 import {vuexData} from 'js/mixin'
-import Scroll from '@/components/public/Scroll'
+import Scroll from 'public/Scroll'
 export default {
     name: "ShoppingPayMent",
     mixins:[vuexData],
@@ -53,6 +53,10 @@ export default {
     beforeRouteEnter (to, from, next) {
         next(vm => {
             vm.getDefaultAddress()
+            if (!vm.shopOrderList.length) {
+                vm.$router.push({name:'ShoppingCart'})
+                
+            }
         })
         
     },
@@ -76,6 +80,7 @@ export default {
             defaultAdd:''
         }
     },
+
 
     methods: {
         // 查询默认收货地址

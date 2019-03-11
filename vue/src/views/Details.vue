@@ -161,8 +161,8 @@
 </template>
 
 <script>
-import Scroll from "@/components/public/Scroll";
-import Back from "@/components/public/Back";
+import Scroll from "public/Scroll";
+import Back from "public/Back";
 import {  page, vuexData } from "js/mixin";
 import { ImagePreview } from "vant";
 import AdditionAndSubtraction from "@/components/details/AdditionAndSubtraction";

@@ -2,7 +2,7 @@ module.exports = app => {
     const mongoose = app.mongoose;
     const Schema = mongoose.Schema;
 
-    const AdminSchema = new Schema({
+    const UserSchema = new Schema({
         username: { type: String },
         nickname: { type: String },
         password: { type: String },
@@ -33,12 +33,7 @@ module.exports = app => {
             type: Number,
             default: +new Date()
         },
-        // 是否是超级管理员
-        is_super: { 
-            type: Number ,
-            default: 0
-        }
     });
 
-    return mongoose.model('Admin', AdminSchema, 'admin');
+    return mongoose.model('User', UserSchema, 'admin');
 }

@@ -67,17 +67,8 @@ const TITLE = {
     ShoppingPayMent: '订单结算',
 }
 
-// 设置点击高亮的tab
-const ACTIVE = {
-    Home: 1,
-    Category: 2,
-    ShoppingCart: 3,
-    My: 4,
-}
 router.beforeEach((to, from, next) => {
-    sessionStorage.setItem('testKey', '这是一个测试的value值');
     document.title = TITLE[to.name]
-    store.commit('ACTIVE', ACTIVE[to.name])
     // 如果已经登录了就不让进这个页面
     if (store.state.userName && to.meta.requireAuth === false) {
         next({ path: '/home' })

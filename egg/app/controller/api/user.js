@@ -14,8 +14,6 @@ class UserController extends BaseController {
                 msg: '请输入完整信息'
             }
         }
-        console.log(ctx.session);
-
 
         if (this.ctx.session.code.toUpperCase() !== verify.toUpperCase()) {
             return ctx.body = {
@@ -24,10 +22,10 @@ class UserController extends BaseController {
             }
         }
 
-        let data = await ctx.model.Admin.findOne({ nickname })
+        let data = await ctx.model.User.findOne({ nickname })
         if (!data) {
             let username = this.ctx.helper.random(15)   // 获取用户名
-            let user = await new ctx.model.Admin({
+            let user = await new ctx.model.User({
                 nickname,
                 username,
                 password: md5(password)
@@ -72,7 +70,7 @@ class UserController extends BaseController {
                 msg: '验证码错误'
             }
         }
-        let data = await ctx.model.Admin.findOne({ nickname })
+        let data = await ctx.model.User.findOne({ nickname })
         if (!data || !data.nickname) {  //说明数据库没有这个名字
             this.error('用户名错误')
         } else {
@@ -98,11 +96,79 @@ class UserController extends BaseController {
         }
     }
 
+    // 短信验证码
+    async sendCodeMsg() {
+        let num = ''
+        for (let i = 0; i < 6; i++) {
+            num += String(Math.floor(Math.random() * 10))
+        }
+        const { phone } = this.ctx.request.body
+        const ip = this.ctx.request.header['x-forwarded-for']   // 客户端ip
+        const add_day = await this.ctx.service.tools.getDay()
+        const mobileTemp = await this.ctx.model.MobileTemp.findOne({ add_day });
+        //1个ip 一天只能发10个手机号
+        var ipCount = await this.ctx.model.MobileTemp.find({ ip, add_day }).count();
+        if (mobileTemp) {
+            // 1分钟后再发送
+            console.log(+new Date() / 1000 - mobileTemp.add_timer / 1000);
+
+            if (((+new Date() / 1000) - mobileTemp.add_timer / 1000) < 60) {
+                return ctx.body = {
+                    code: -2,
+                    msg: '请1分钟后再试',
+                }
+            }
+            // 说明次数没有到，继续发送
+            if (mobileTemp.send_count < 6 && ipCount < 10) {
+                const send_count = mobileTemp.send_count + 1
+                await this.ctx.model.MobileTemp.updateOne({ _id: mobileTemp._id }, { send_count })
+                const data = await this.service.tools.sendCode(phone, num)
+                if (data.error_code == 0) {
+                    this.ctx.body = {
+                        code: 200,
+                        msg: '短信发送成功',
+                    }
+                } else if (data.error_code == 10012) {
+                    this.ctx.body = {
+                        code: 200,
+                        msg: '没有免费短信了，请直接注册',
+                    }
+                }
+            } else {
+                this.ctx.body = {
+                    code: -1,
+                    msg: '当前手机号码发送次数达到上限，明天重试'
+                };
+            }
+        } else {
+            
+            const data = await this.service.tools.sendCode(phone, num)
+            if (data.error_code == 0) {
+                // 第一次发送
+                let phoneTmep = new this.ctx.model.MobileTemp({
+                    phone,
+                    add_day,
+                    ip,
+                    send_count: 1
+                });
+                await phoneTmep.save();
+                this.ctx.body = {
+                    code: 200,
+                    msg: '短信发送成功',
+                }
+            } else if (data.error_code == 10012) {
+                this.ctx.body = {
+                    code: 200,
+                    msg: '没有免费短信了,请直接注册',
+                }
+            }
+        }
+    }
     // 保持登录
     async keepLogin() {
         const { ctx } = this
         if (ctx.session.userInfo) {
-            let userInfo = await this.ctx.model.Admin.findById(ctx.session.userInfo._id, USERSTR)
+            let userInfo = await this.ctx.model.User.findById(ctx.session.userInfo._id, USERSTR)
             ctx.body = {
                 code: 200,
                 userInfo
@@ -129,7 +195,7 @@ class UserController extends BaseController {
 
     // 用户查询
     async queryUser() {
-        let userInfo = await this.ctx.model.Admin.findById(this.ctx.session.userInfo._id, USERSTR)
+        let userInfo = await this.ctx.model.User.findById(this.ctx.session.userInfo._id, USERSTR)
         if (!userInfo) {
             this.error('用户名不存在')
             return
@@ -149,23 +215,23 @@ class UserController extends BaseController {
             this.ctx.session.userInfo['avatar'] = data.avatar
         }
         if (data.nickname === this.ctx.session.userInfo.nickname) {
-            await this.ctx.model.Admin.updateOne({ '_id': data.id }, data)
+            await this.ctx.model.User.updateOne({ '_id': data.id }, data)
             this.ctx.session.userInfo['nickname'] = data.nickname
-            let user = await this.ctx.model.Admin.findById(data.id, USERSTR)
+            let user = await this.ctx.model.User.findById(data.id, USERSTR)
             this.ctx.body = {
                 code: 200,
                 msg: '更改成功',
                 user
             }
         } else {
-            let user = await this.ctx.model.Admin.findOne({ nickname: data.nickname })
+            let user = await this.ctx.model.User.findOne({ nickname: data.nickname })
             if (user) {
                 this.error('昵称已经存在')
                 return
             } else {
-                await this.ctx.model.Admin.updateOne({ '_id': data.id }, data)
+                await this.ctx.model.User.updateOne({ '_id': data.id }, data)
                 this.ctx.session.userInfo['nickname'] = data.nickname
-                let user = await this.ctx.model.Admin.findById(data.id, USERSTR)
+                let user = await this.ctx.model.User.findById(data.id, USERSTR)
                 this.ctx.body = {
                     code: 200,
                     msg: '更改成功',

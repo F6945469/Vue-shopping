@@ -37,6 +37,7 @@
         <!-- <BaseLoding :showFlag='showFlag'/> -->
         <HomeSearch v-show="query" @scrollToEnd='scrollToEnd' :list='dataArr' @details='searchDetails' :len='len' :value='value' @vals='vals'/>
         <div v-show="searchLoading" class="van-loading van-loading--circular van-loading--white" style="color: white;z-index:999"><span class="van-loading__spinner van-loading__spinner--circular"><svg viewBox="25 25 50 50" class="van-loading__circular"><circle cx="50" cy="50" r="20" fill="none"></circle></svg></span></div>
+        <BaseFooter active='0'/>
         <router-view/>
 </div>
 
@@ -50,7 +51,8 @@ import HomeHot from '@/components/home/HomeHot'
 import HomeSearch from '@/components/home/HomeSearch'
 import HomeSwiper from '@/components/home/HomeSwiper'
 import HomePanl from '@/components/home/HomePanl'
-import Scroll from '@/components/public/Scroll'
+import Scroll from 'public/Scroll'
+import BaseFooter from 'public/BaseFooter'
 import BaseRefresh from '@/components/home/BaseRefresh'
 import {vuexData,page} from 'js/mixin'
 import {throttle} from 'js/util'
@@ -90,6 +92,7 @@ export default {
         BaseRefresh,
         HomeSwiper,
         HomePanl,
+        BaseFooter,
     },
     methods: {
         scroll(e) {

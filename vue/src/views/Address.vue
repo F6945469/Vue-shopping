@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import Scroll from '@/components/public/Scroll'
+import Scroll from 'public/Scroll'
 import {vuexData} from 'js/mixin'
 export default {
     name: 'Address',

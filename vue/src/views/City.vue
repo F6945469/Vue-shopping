@@ -64,7 +64,7 @@
 
 <script>
 import CityRight from "@/components/city/CityRight";
-import Scroll from "@/components/public/Scroll";
+import Scroll from "public/Scroll";
 import city from "js/city";
 import { throttle } from "js/util";
 import { vuexData } from "js/mixin";

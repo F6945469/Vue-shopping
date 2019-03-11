@@ -13,8 +13,35 @@
                         <label for="password" class="sr-only">PASSWORD</label>
                         <input type="password" v-model="password" class="form-control" maxlength="16" placeholder="PASSWORD" autocomplete="off">
                     </div>
+                    <van-cell-group>
+                        <van-field
+                            v-model="phone"
+                            center
+                            clearable
+                            label="手机号码"
+                            placeholder="仅注册需要"
+                            class="sms"
+                            type='number'
+                            maxlength='11'
+                        >
+                        </van-field>
+                    </van-cell-group>
+                    <van-cell-group>
+                        <van-field
+                            v-model="sms"
+                            center
+                            clearable
+                            label="短信验证码"
+                            placeholder="仅注册需要"
+                            class="sms"
+                            maxlength='4'
+                        >
+                            <van-button slot="button" size="small" type="primary" @click="sendCode">发送验证码</van-button>
+                            <!-- <van-button slot="button" disabled type="primary" size="small">59秒后再试</van-button> -->
+                        </van-field>
+                    </van-cell-group>
                     <div class="form-group verify">
-                        <label for="inputEmail3" class="col-sm-2 control-label">验证码：</label>
+                        <label for="inputEmail3" class="col-sm-2 control-label">验证码</label>
                         <input type="text" placeholder="请输入验证码" v-model="verifyTxt"  class="form-control verify-input" maxlength="4"  autocomplete="off">
                         <div class="col-sm-10">
                             <img :src="verify" ref="eleVerify" @click="replaceVerify" title="看不清？点击刷新">
@@ -33,7 +60,7 @@
 </template>
 
 <script>
-import Back from "@/components/public/Back";
+import Back from "public/Back";
 import {vuexData} from 'js/mixin'
 export default {
     name: "Login",
@@ -47,7 +74,9 @@ export default {
             regLoding:false,
             loginLoding: false,
             verify: this.Api.getAverify() , 
-            verifyTxt: ''
+            verifyTxt: '',
+            sms:'',
+            phone:''
         }
     },
     components: {
@@ -66,7 +95,11 @@ export default {
                 return
             }
             if (!this.verifyTxt) {
-                 this.$toast('请输入验证码');
+                this.$toast('请输入验证码');
+                return
+            }
+            if (this.verifyTxt.length < 4) {
+                this.$toast('请输入正确的验证码');
                 return
             }
             if (!flag) {    // 登录
@@ -124,6 +157,21 @@ export default {
                 
             }
         },
+
+        // 发送验证码
+        async sendCode() {
+        try {
+            if (!this.phone || this.phone.length != 11 ||  !/^[1][3,4,5,7,8][0-9]{9}$/.test(this.phone)) {
+                return this.$toast('请输入正确的手机号');
+            }
+            const {data} = await this.Api.codeMsg(this.phone)
+            this.$toast(data.msg);
+        } catch (error) {
+            
+        }
+            
+            
+        }
     },
     // 判断如果已经登录，就不让进入这个页面
     beforeRouteEnter   (to, from, next) {
@@ -142,6 +190,14 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.login-warpper >>> .van-cell--center 
+    padding-left 0
+    border-bottom: 1px solid rgba(0,0,0,.1);
+.login-warpper >>> .van-hairline--top-bottom:after
+    border 0
+.login-warpper >>> .van-field__control::-webkit-input-placeholder
+    color: #D8D8D8
+    font-size 15px    
 .login
     height 100%
     background #EFEFEF
@@ -162,7 +218,7 @@ export default {
             margin 0 auto
             background #fff
             position absolute
-            top 20%
+            top 17%
             left 50%
             transform translateX(-50%)
             padding: 7px
@@ -226,7 +282,6 @@ export default {
                     input::-webkit-input-placeholder
                         color: #D8D8D8
                         font-size 15px
-                      
                     .btn-primary
                         height: 50px;
                         padding-right: 20px;
@@ -274,6 +329,7 @@ export default {
                 .verify
                     display flex
                     align-items center
+                    margin-top 20px
                     label
                         flex 0 0 20% 
                     .verify-input

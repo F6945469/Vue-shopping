@@ -40,19 +40,21 @@
         <transition name="fade">
             <router-view/>
         </transition>
+        <BaseFooter active='3'/>
     </div>
 </template>
 
 <script>
 import UserInfo from "@/components/my/UserInfo";
 import { vuexData } from "js/mixin";
-
+import BaseFooter from 'public/BaseFooter'
 export default {
     name: "My",
     mixins: [vuexData],
 
     components: {
-        UserInfo
+        UserInfo,
+        BaseFooter,
     },
     data() {
         return {

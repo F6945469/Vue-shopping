@@ -117,6 +117,7 @@ ul
             img 
                 width 100%
                 height 100%
+                box-shadow: 0 2px 8px #f0f1f2;
         .img2
             flex 0 0 25%
             width 25%

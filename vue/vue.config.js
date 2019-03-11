@@ -13,6 +13,7 @@ module.exports = {
             .set('js', resolve('src/assets/js'))
             .set('css', resolve('src/assets/css'))
             .set('img', resolve('src/assets/img'))
+            .set('public', resolve('src/components/public'))
     },
     devServer: {
         port: 8090,

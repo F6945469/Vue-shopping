@@ -134,6 +134,7 @@ export default class Api {
      * getCollection        查询我的收藏    参数：page，页码，默认第一页
      * register             注册            参数：nickname，用户名 password：密码，verify:验证码
      * login                登录
+     * codeMsg              短信验证码      参数： sms 4位验证码
      * getMyOrder           订单查询        参数：evaluate：用来判断是不是查询订单，默认false
      * alreadyEvaluated     查询已评价      参数： page：页面
      * tobeEvaluated        查询待评价      参数： page：页面
@@ -171,11 +172,12 @@ export default class Api {
         })
     }
 
-    static register(nickname, password,verify) {
+    static register(nickname, password,verify,sms) {
         return axios.post('/register', {
             nickname,
             password,
-            verify
+            verify,
+            sms
         })
     }
 
@@ -184,6 +186,12 @@ export default class Api {
             nickname,
             password,
             verify
+        })
+    }
+
+    static codeMsg(phone) {
+        return axios.post('/sendCodeMsg', {
+            phone
         })
     }
 

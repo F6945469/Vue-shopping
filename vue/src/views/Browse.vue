@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import Scroll from '@/components/public/Scroll'
-import GoodsList from '@/components/public/GoodsList'
+import Scroll from 'public/Scroll'
+import GoodsList from 'public/GoodsList'
 import {vuexData} from 'js/mixin'
 export default {
     name: 'Browse',

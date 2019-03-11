@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import Scroll from '@/components/public/Scroll'
+import Scroll from 'public/Scroll'
 import {page,vuexData} from 'js/mixin'
 export default {
     name: "Evaluate",

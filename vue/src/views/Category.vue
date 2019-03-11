@@ -34,14 +34,16 @@
                 </div>
             </div>
         </div>
+        <BaseFooter active='1'/>
         <BaseLoding :showFlag="showFlag"/>
         <router-view/>
     </div>
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
-import Scroll from "@/components/public/Scroll";
-import GoodsList from "@/components/public/GoodsList";
+import Scroll from "public/Scroll";
+import GoodsList from "public/GoodsList";
+import BaseFooter from 'public/BaseFooter'
 import { vuexData } from "js/mixin";
 export default {
     name: 'Category',
@@ -61,7 +63,8 @@ export default {
 
     components: {
         Scroll,
-        GoodsList
+        GoodsList,
+        BaseFooter
     },
 
     methods: {

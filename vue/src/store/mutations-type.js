@@ -7,7 +7,6 @@ export const BROWSE = 'BROWSE'
 export const SHOP_ORDER_LIST = 'SHOP_ORDER_LIST'
 export const TEMP_ORARY_ADDRESS = 'TEMP_ORARY_ADDRESS'
 export const CITY = 'CITY'
-export const ACTIVE = 'ACTIVE'
 export const SEARCH_HISTORY_LIST = 'SEARCH_HISTORY_LIST'
 
 

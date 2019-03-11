@@ -1,5 +1,5 @@
 import { mapMutations, mapGetters, mapActions } from 'vuex'
-import BaseLoding from '@/components/public/BaseLoding'
+import BaseLoding from 'public/BaseLoding'
 export const vuexData = {
     data() {
         return {
@@ -20,7 +20,6 @@ export const vuexData = {
             'shopOrderList',
             'temporaryAddress',
             'city',
-            'active',
             'searchHistoryList'
         ])
     },

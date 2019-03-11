@@ -1,7 +1,8 @@
 // 前端api接口相关路由
 module.exports = app => {
     const { router, controller } = app;
-    router.get('/v1/verify', app.controller.base.verify);//验证码
+    router.get('/v1/verify', app.controller.base.verify);           //验证码
+    router.post('/v1/sendCodeMsg', app.controller.api.user.sendCodeMsg);//短信验证码
     router.post('/v1/register', controller.api.user.register);     // 用户注册
     router.post('/v1/login', controller.api.user.login);           // 用户登录
     router.post('/v1/queryUser', controller.api.user.queryUser);   // 查询单个用户

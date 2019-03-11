@@ -6,7 +6,7 @@
             </keep-alive>
             <router-view v-else id="view"></router-view>
         </transition>
-        
+<!--         
         <div class="tab" v-show="active">
             <van-tabbar>
                 <van-tabbar-item
@@ -17,7 +17,7 @@
                     :class="{'active':active==index+1}"
                 >{{val.title}}</van-tabbar-item>
             </van-tabbar>
-        </div>
+        </div> -->
     </div>
 </template>
 
