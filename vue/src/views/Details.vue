@@ -230,8 +230,8 @@ export default {
                     this.unLocked(); // 解锁
                     this.$refs.swiperImg.style.opacity = 1;
                     this.$refs.swiperImg2.style.opacity = 1;
-
                     if (data.goods.goodsOne) {
+                        document.title = data.goods.goodsOne.name
                         this.goods = data.goods.goodsOne;
                         setTimeout(() => {
                             this.setBrowse(data.goods.goodsOne);

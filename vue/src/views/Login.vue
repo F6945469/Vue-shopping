@@ -122,8 +122,9 @@ export default {
                             this.$router.go(-1)
                         }, 1500);
                         
-                    } else if(data.code == -2) {
+                    } else {
                         setTimeout(() => {
+                            this.verifyTxt = ''
                             this.replaceVerify()
                         }, 600);
                         
@@ -144,8 +145,10 @@ export default {
                         setTimeout(() => {
                             this.$router.go(-1)
                         }, 1500);
-                    }else if(data.code == -2) {
+                    }else {
+                       
                        setTimeout(() => {
+                            this.verifyTxt = ''
                             this.replaceVerify()
                         }, 600);
                     }
