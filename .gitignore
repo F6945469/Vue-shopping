@@ -17,6 +17,7 @@ yarn.lock
 coverage/
 .idea/
 run/
+.autod.conf.js
 
 # Editor directories and files
 .idea
