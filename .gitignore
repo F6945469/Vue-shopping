@@ -19,6 +19,8 @@ coverage/
 .idea/
 run/
 .autod.conf.js
+appveyor.yml
+.travis.yml
 
 # Editor directories and files
 .idea
