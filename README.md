@@ -16,23 +16,21 @@
 
 ## 项目说明
 
-本项目采用前后端完全分离模式，后端提供接口，前端渲染数据,主目录下的 **<abbr title="Hyper Text Markup Language">mall</abbr>** 目录是前端目录，**<abbr title="Hyper Text Markup Language">server</abbr>** 是后端目录
+本项目采用前后端完全分离模式，后端提供接口，前端渲染数据,主目录下的 **<abbr title="Hyper Text Markup Language">vue</abbr>** 目录是前端目录，**<abbr title="Hyper Text Markup Language">egg</abbr>** 是后端目录
 关于数据库问题，项目采用 **<abbr title="Hyper Text Markup Language">mongodb</abbr>** 数据库，**<abbr title="Hyper Text Markup Language">mongoose</abbr>** 建模，数据库版本是**<abbr title="Hyper Text Markup Language">Mongodb4.0</abbr>**
 
 
 ## 运行项目步骤：
 
-##### 0：注意：用npm安装，不要用cnpm，cnpm可能有些包有问题
-
 ##### 1：请确保node版本在8以上，本地安装好mongodb数据库并且打开连接
 
-##### 2：进入 egg 目录，在此目录下打开cmd窗口运行 npm i 安装依赖,然后 npm run dev 启动本地服务,打开http://127.0.0.1:3000  会自动把数据导入数据库,第一次运行项目需要导入打开默认导入一次（会自动把json数据导入数据库，看到控制台打印成功才能运行）
+##### 2：进入 egg 目录，在此目录下打开cmd窗口运行 cnpm i 安装依赖,然后 npm run dev 启动本地服务,打开http://127.0.0.1:3000  会自动把数据导入数据库,第一次运行项目需要导入打开默认导入一次（会自动把json数据导入数据库，看到控制台打印成功才能运行）
 
-##### 3：进入 vue 目录，在此目录下打开cmd窗口运行 npm i 安装依赖,然后 npm run dev 启动项目
+##### 3：进入 vue 目录，在此目录下打开cmd窗口运行 cnpm i 安装依赖,然后 npm run dev 启动项目
 
 ##### 4：浏览器打开 http://localhost:8090 
 
-##### 5：项目所用到的接口在vue文件夹下src目录的api.js里面
+##### 5：项目所用到的接口在vue文件夹下src目录的Api.js里面
 
 
 ## 页面
@@ -66,9 +64,11 @@
 - [x] egg.js重写后端
 - [x] 商品评论,加图片评论
 - [x] 用户头像裁剪上传更改,手机端待优化
-- [ ] 手机接收验证码, 手机号注册
+- [x] 手机接收验证码, 手机号注册
 - [ ] 添加微信和支付宝支付
 - [ ] 改造成SSR渲染
+- [ ] 前端页面结构优化
+- [ ] 后台管理
 
 ## 项目截图
 ![home.png](./images/home.png)
@@ -85,6 +85,7 @@
 ![chakan.png](./images/chakan.png)
 ![order.png](./images/order.png)
 ![my.png](./images/my.png)
+![login.png](./images/login.png)
 
 
 ### 关于前端请求接口跨域问题，

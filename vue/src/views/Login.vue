@@ -76,7 +76,7 @@ export default {
             verify: this.Api.getAverify() , 
             verifyTxt: '',
             sms:'',
-            phone:'18685459561',
+            phone:'',
             retry:'', // 60秒倒计时
             dataTimer:10 // 60秒倒计时
         }
