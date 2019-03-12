@@ -110,38 +110,28 @@ class UserController extends BaseController {
         var ipCount = await this.ctx.model.MobileTemp.find({ ip, add_day }).count();
         if (mobileTemp) {
             // 1分钟后再发送
-            console.log(+new Date() / 1000 - mobileTemp.add_timer / 1000);
-
             if (((+new Date() / 1000) - mobileTemp.add_timer / 1000) < 60) {
-                return ctx.body = {
+                return this.ctx.body = {
                     code: -2,
                     msg: '请1分钟后再试',
+                    timer:60 - Math.floor(((+new Date() / 1000) - mobileTemp.add_timer / 1000))
                 }
             }
             // 说明次数没有到，继续发送
             if (mobileTemp.send_count < 6 && ipCount < 10) {
                 const send_count = mobileTemp.send_count + 1
-                await this.ctx.model.MobileTemp.updateOne({ _id: mobileTemp._id }, { send_count })
+                await this.ctx.model.MobileTemp.updateOne({ _id: mobileTemp._id }, { send_count,add_timer:+new Date()})
                 const data = await this.service.tools.sendCode(phone, num)
                 if (data.error_code == 0) {
-                    this.ctx.body = {
-                        code: 200,
-                        msg: '短信发送成功',
-                    }
+                    this.success('短信发送成功')
                 } else if (data.error_code == 10012) {
-                    this.ctx.body = {
-                        code: 200,
-                        msg: '没有免费短信了，请直接注册',
-                    }
+                    this.error('没有免费短信了，请直接注册')
                 }
             } else {
-                this.ctx.body = {
-                    code: -1,
-                    msg: '当前手机号码发送次数达到上限，明天重试'
-                };
+                this.error('当前手机号码发送次数达到上限，明天重试')
             }
         } else {
-            
+
             const data = await this.service.tools.sendCode(phone, num)
             if (data.error_code == 0) {
                 // 第一次发送
@@ -152,15 +142,9 @@ class UserController extends BaseController {
                     send_count: 1
                 });
                 await phoneTmep.save();
-                this.ctx.body = {
-                    code: 200,
-                    msg: '短信发送成功',
-                }
+                this.success('短信发送成功')
             } else if (data.error_code == 10012) {
-                this.ctx.body = {
-                    code: 200,
-                    msg: '没有免费短信了,请直接注册',
-                }
+                this.error('没有免费短信了，请直接注册')
             }
         }
     }

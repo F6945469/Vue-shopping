@@ -10,9 +10,9 @@ class BaseController extends Controller {
         }
     }
 
-    async error(msg) {
+    async error(msg, code = -1) {
         this.ctx.body = {
-            code: -1,
+            code,
             msg
         }
     }

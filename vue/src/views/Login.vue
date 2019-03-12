@@ -36,8 +36,8 @@
                             class="sms"
                             maxlength='4'
                         >
-                            <van-button slot="button" size="small" type="primary" @click="sendCode">发送验证码</van-button>
-                            <!-- <van-button slot="button" disabled type="primary" size="small">59秒后再试</van-button> -->
+                            <van-button slot="button" size="small" type="primary" v-if="!retry" @click="sendCode">发送验证码</van-button>
+                            <van-button slot="button" disabled type="primary" v-else size="small">{{retry}}秒后再试</van-button>
                         </van-field>
                     </van-cell-group>
                     <div class="form-group verify">
@@ -76,7 +76,9 @@ export default {
             verify: this.Api.getAverify() , 
             verifyTxt: '',
             sms:'',
-            phone:''
+            phone:'18685459561',
+            retry:'', // 60秒倒计时
+            dataTimer:10 // 60秒倒计时
         }
     },
     components: {
@@ -165,6 +167,27 @@ export default {
                 return this.$toast('请输入正确的手机号');
             }
             const {data} = await this.Api.codeMsg(this.phone)
+            if (data.code == 200) {
+                this.dataTimer = 60
+                let t = setInterval(() => {
+                    if (this.dataTimer<=0) {
+                        this.retry = ''
+                        clearInterval(t)
+                        return
+                    }
+                    this.retry = this.dataTimer--
+                }, 1000);
+            } else if(data.code == -2) {
+                let t = setInterval(() => {
+                    if (data.timer<=0) {
+                        this.retry = ''
+                        clearInterval(t)
+                        this.dataTimer = 60
+                        return
+                    }
+                    this.retry = data.timer--
+                }, 1000);
+            } 
             this.$toast(data.msg);
         } catch (error) {
             
