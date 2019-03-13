@@ -35,6 +35,12 @@ module.exports = function (opt, app) {
                 let payload = await app.jwt.verify(token, app.config.secret)
                 if (payload.name) {
                     await next()                    
+                } else {
+                    ctx.status = 401;
+                    ctx.body = {
+                        msg: '登录过期，请重新登录',
+                        code: '-10001'
+                    };
                 }
             } catch (error) {
                 if (error.name == 'TokenExpiredError') {    // 过期
