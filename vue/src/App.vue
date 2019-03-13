@@ -6,18 +6,6 @@
             </keep-alive>
             <router-view v-else id="view"></router-view>
         </transition>
-<!--         
-        <div class="tab" v-show="active">
-            <van-tabbar>
-                <van-tabbar-item
-                    @click="change(index+1)"
-                    v-for="(val,index) of tabArr"
-                    :key="val.id"
-                    :icon="val.icon"
-                    :class="{'active':active==index+1}"
-                >{{val.title}}</van-tabbar-item>
-            </van-tabbar>
-        </div> -->
     </div>
 </template>
 
@@ -58,7 +46,7 @@ export default {
     },
 
     created() {
-        this.keeplogin();
+        // this.keeplogin();
     },
     watch: {
         $route(to, from) {

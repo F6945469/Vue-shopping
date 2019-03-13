@@ -30,7 +30,7 @@ const router = new Router({
         { path: '/home', name: 'Home', component: Home, meta: { keepAlive: true } },//  首页
         { path: '/category', name: 'Category', component: Category, meta: { keepAlive: true } },// tab分类
         { path: '/shoppingCart', name: 'ShoppingCart', component: ShoppingCart },// tab购物车
-        { path: '/details', name: 'Details', component: Details, props: (route) => ({ id: route.query.id }),meta: { keepAlive: true }  },      // 商品详情
+        { path: '/details', name: 'Details', component: Details, props: (route) => ({ id: route.query.id }), meta: { keepAlive: true } },      // 商品详情
         { path: '/my', name: 'My', component: My },                   // 个人中心
         { path: '/order', component: MyOrder, name: 'MyOrder' },     // 我的订单
         { path: '/collection', name: 'Collection', component: Collection },// 我的收藏
@@ -40,7 +40,7 @@ const router = new Router({
         { path: '/rate', component: Rate, name: 'Rate', props: (route) => ({ id: route.query.id }) },            // 评价商品
         { path: '/address', name: 'Address', component: Address }, // 地址
         { path: '/addressEdit', name: 'AddressEdit', component: AddressEdit }, // 新增和编辑地址
-        { path: '/login', name: 'Login', component: Login, meta: { requireAuth: false } }, // 登入
+        { path: '/login', name: 'Login', component: Login, meta: { requireAuth: false} }, // 登入
         { path: '/city', component: City, name: 'City' },   // 城市选择
         { path: '/shoppingPayMent', name: 'ShoppingPayMent', component: ShoppingPayMent }, // 支付页面
         { path: '*', redirect: '/home' },   // 首页
@@ -67,15 +67,23 @@ const TITLE = {
     ShoppingPayMent: '订单结算',
 }
 
+
+
 router.beforeEach((to, from, next) => {
     document.title = TITLE[to.name]
-    // 如果已经登录了就不让进这个页面
-    if (store.state.userName && to.meta.requireAuth === false) {
-        next({ path: '/home' })
-    } else {
-        next()
+    if (to.meta.requireAuth === false) { 
+        /* 
+          从Vuex拿出token码，说明已登陆
+        */
+        if (store.state.token) {
+            next({path: '/home',})
+        } else {
+            next() 
+        }
+    } else { 
+        next();
     }
-    next()
 })
+
 
 export default router

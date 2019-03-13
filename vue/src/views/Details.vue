@@ -270,20 +270,25 @@ export default {
 
         // 查询是否已收藏
         async isCollection(id) {
-            this.showFlag = true;
-            const { data } = await this.Api.isCollection(id);
-            if (data.code == 200) {
-                this.showFlag = false;
-                if (data.isCollection == 1) {
-                    // 已经收藏收藏
-                    this.isCollectionFlag = false;
+            try {
+                this.showFlag = true;
+                const { data } = await this.Api.isCollection(id);
+                if (data.code == 200) {
+                    this.showFlag = false;
+                    if (data.isCollection == 1) {
+                        // 已经收藏收藏
+                        this.isCollectionFlag = false;
+                    } else {
+                        this.isCollectionFlag = true;
+                    }
                 } else {
+                    this.showFlag = false;
                     this.isCollectionFlag = true;
                 }
-            } else {
+            } catch (error) {
                 this.showFlag = false;
-                this.isCollectionFlag = true;
             }
+            
         },
 
         // 点击收藏

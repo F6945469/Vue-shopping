@@ -118,6 +118,7 @@ export default {
                     const {data} = await this.Api.register(this.nickname,this.password,this.verifyTxt)
                     if (data.code == 200) {
                         this.setName(data.userInfo)
+                        this.setToken(data.token)
                         setTimeout(() => {
                             this.$router.go(-1)
                         }, 1500);
@@ -132,8 +133,11 @@ export default {
                     this.regLoding = false
                     this.$toast(data.msg);
                 } catch (error) {
+                    console.log(error);
+                    
                     this.$toast('网络错误')
                     this.regLoding = false
+                    this.replaceVerify()
                 }
                 
             } else {    // 登录
@@ -142,6 +146,7 @@ export default {
                     const {data} = await this.Api.login(this.nickname,this.password,this.verifyTxt)
                     if (data.code == 200) {
                         this.setName(data.userInfo)
+                        this.setToken(data.token)
                         setTimeout(() => {
                             this.$router.go(-1)
                         }, 1500);
@@ -157,6 +162,7 @@ export default {
                 } catch (error) {
                     this.$toast('网络错误')
                     this.loginLoding = false
+                    this.replaceVerify()
                 }
                 
                 
@@ -198,19 +204,6 @@ export default {
             
             
         }
-    },
-    // 判断如果已经登录，就不让进入这个页面
-    beforeRouteEnter   (to, from, next) {
-        next(async vm => {
-           try {
-                const { data } = await vm.Api.keeplogin();
-                if (data.code == 200) {
-                    vm.$router.push({ path: `/`})
-                }
-                } catch (error) {
-                    vm.$toast("网络错误");
-            }
-        })
     },
 }
 </script>

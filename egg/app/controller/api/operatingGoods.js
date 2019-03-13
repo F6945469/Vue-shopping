@@ -192,7 +192,6 @@ class OperatingGoodsController extends BaseController {
             } else {    // 购物车来的
                 let item = await ctx.model.ShopList.find({ uid, cid: data.orderId[i] })
                 let datas = item[0]
-                console.log(datas);
 
                 shopList[i] = {
                     count: datas.count,

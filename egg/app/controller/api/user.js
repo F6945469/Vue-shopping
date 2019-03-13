@@ -39,12 +39,19 @@ class UserController extends BaseController {
                 month: user.month,
                 nickname: user.nickname,
                 username: user.username,
-                year: user.year
+                year: user.year,
+
             }
+            // Token
+            let userToken = {
+                name: userInfo.username
+            }
+            const token = await this.service.token.setToken(userToken)
             ctx.body = {
                 code: 200,
                 userInfo,
-                msg: '注册成功'
+                msg: '注册成功',
+                token
             }
 
         } else {
@@ -87,10 +94,16 @@ class UserController extends BaseController {
                     username: data.username,
                     year: data.year
                 }
+                // Token
+                let userToken = {
+                    name: userInfo.username
+                }
+                const token = await this.service.token.setToken(userToken)
                 ctx.body = {
                     code: 200,
                     msg: '登录成功',
-                    userInfo
+                    userInfo,
+                    token
                 }
             }
         }
@@ -114,13 +127,13 @@ class UserController extends BaseController {
                 return this.ctx.body = {
                     code: -2,
                     msg: '请1分钟后再试',
-                    timer:60 - Math.floor(((+new Date() / 1000) - mobileTemp.add_timer / 1000))
+                    timer: 60 - Math.floor(((+new Date() / 1000) - mobileTemp.add_timer / 1000))
                 }
             }
             // 说明次数没有到，继续发送
             if (mobileTemp.send_count < 6 && ipCount < 10) {
                 const send_count = mobileTemp.send_count + 1
-                await this.ctx.model.MobileTemp.updateOne({ _id: mobileTemp._id }, { send_count,add_timer:+new Date()})
+                await this.ctx.model.MobileTemp.updateOne({ _id: mobileTemp._id }, { send_count, add_timer: +new Date() })
                 const data = await this.service.tools.sendCode(phone, num)
                 if (data.error_code == 0) {
                     this.success('短信发送成功')

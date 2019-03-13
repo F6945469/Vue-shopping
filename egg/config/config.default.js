@@ -31,8 +31,8 @@ module.exports = appInfo => {
             options: {},
         },
         open() {
-            console.log('难看');
-            
+           
+
         }
     }
 
@@ -54,11 +54,16 @@ module.exports = appInfo => {
     config.bodyParser = {
         jsonLimit: '100mb',
     }
+
+    exports.jwt = {
+        secret: "egg" //自己设置的值
+    };
     // config.cors = {
     //     origin: '*',
     //     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
     // } 
     config.url = 'http://localhost:3000'
     config.uploadDir = 'app/public/avatar/'
+    config.secret = 'secret'
     return config;
 };
