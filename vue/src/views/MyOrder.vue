@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div v-if="!list.length && !showFlag" class="null">
-                        {{userName&&!showFlag? '暂无订单~~' : '请先登录噢~~'}}
+                        {{token&&!showFlag? '暂无订单~~' : '请先登录噢~~'}}
                     </div>
                 </Scroll>
             </van-tab>

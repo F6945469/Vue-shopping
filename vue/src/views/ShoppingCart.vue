@@ -131,7 +131,7 @@ export default {
             try {
                 this.showFlag = true;
                 const { data } = await this.Api.getCard();
-                if (data.code == -1) {
+                if (data.code == -10000) {
                     this.isLogin = true;
                     this.showFlag = false;
                 } else {

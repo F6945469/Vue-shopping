@@ -1,7 +1,7 @@
 <template>
     <div class="page-tab my">
         <van-nav-bar title="会员中心" :left-arrow="false"/>
-        <div class="avatar" v-if="!userName">
+        <div class="avatar" v-if="!token">
             <img
                 src="http://img4.imgtn.bdimg.com/it/u=198369807,133263955&fm=27&gp=0.jpg"
                 alt
@@ -82,7 +82,7 @@ export default {
         },
 
         address() {
-            if (this.userName) {
+            if (this.token) {
                 this.$router.push({ name: "Address" });
             } else {
                 this.$router.push({ name: "Login" });

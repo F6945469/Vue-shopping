@@ -11,7 +11,7 @@
                 <GoodsList  :list='dataArr' :isCollection='true'  @close='close'/>
             </div>
             <div v-if="!dataArr.length" class="null">
-                 {{userName ?'暂无收藏~~' : '请先登录噢~~'}}
+                 {{token ?'暂无收藏~~' : '请先登录噢~~'}}
             </div>
             <div v-show="loading2" class="van-loading van-loading--circular van-loading--white" style="color: white;"><span class="van-loading__spinner van-loading__spinner--circular"><svg viewBox="25 25 50 50" class="van-loading__circular"><circle cx="50" cy="50" r="20" fill="none"></circle></svg></span></div>
         </Scroll>
@@ -52,7 +52,7 @@ export default {
     },
     methods: {
         async getCollection(flag) {
-            if (!this.userName) {
+            if (!this.token) {
                 this.showFlag = false
                 return
             }

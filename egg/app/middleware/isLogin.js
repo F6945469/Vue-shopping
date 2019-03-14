@@ -33,6 +33,8 @@ module.exports = function (opt, app) {
         } else {
             try {
                 let payload = await app.jwt.verify(token, app.config.secret)
+                console.log(payload);
+                
                 if (payload.name) {
                     await next()                    
                 } else {
@@ -43,12 +45,17 @@ module.exports = function (opt, app) {
                     };
                 }
             } catch (error) {
-                if (error.name == 'TokenExpiredError') {    // 过期
+                // if (error.name == 'TokenExpiredError') {    // 过期
+                //     ctx.status = 401;
+                //     ctx.body = {
+                //         msg: '登录过期，请重新登录',
+                //         code: '-10001'
+                //     };
+                // }
                     ctx.status = 401;
                     ctx.body = {
                         msg: '登录过期，请重新登录',
                         code: '-10001'
-                    };
                 }
             }
         }

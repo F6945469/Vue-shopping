@@ -293,7 +293,7 @@ export default {
 
         // 点击收藏
         async collection() {
-            if (!this.userName) {
+            if (!this.token) {
                 this.$router.push({ name: "Login" });
                 return;
             }
@@ -328,7 +328,7 @@ export default {
 
         // 加入购物车
         async addShops() {
-            if (!this.userName) {
+            if (!this.token) {
                 this.$router.push({ name: "Login" });
                 return;
             }
@@ -355,7 +355,7 @@ export default {
 
         // 立即购买
         PurchaseImmediately() {
-            if (!this.userName) {
+            if (!this.token) {
                 this.$router.push({ name: "Login" });
                 return;
             }
