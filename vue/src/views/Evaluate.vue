@@ -20,7 +20,7 @@
                                  
                              </div>
                              <h6 v-if="!evaluateList.length" class="null">
-                                     {{token? '暂无待评价商品~~': '请先登录噢~~'}}
+                                     {{userName? '暂无待评价商品~~': '请先登录噢~~'}}
                               </h6>
                          </div>
                          <div v-show="loading" class="van-loading van-loading--circular van-loading--white" style="color: white;"><span class="van-loading__spinner van-loading__spinner--circular"><svg viewBox="25 25 50 50" class="van-loading__circular"><circle cx="50" cy="50" r="20" fill="none"></circle></svg></span></div>
@@ -32,7 +32,7 @@
                             
                               <h6 v-if="!dataArr.length " class="noevaluate">
                                     
-                                    {{token? '暂无已评价商品~~': '请先登录'}}
+                                    {{userName? '暂无已评价商品~~': '请先登录'}}
                               </h6>
                              <div class="item border-bottom" v-for="(val,index) in dataArr" :key="index">
                                  <img :onerror="defaultImg" :src="val.goods[0].image_path" alt="" srcset="">

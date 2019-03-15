@@ -51,7 +51,7 @@ export default {
     methods: {
         // 加入购物车
         async addShops(val) {
-            if (!this.token) {
+            if (!this.UserName) {
                 this.$router.push({name:'Login'})
                 return
             }

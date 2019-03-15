@@ -46,7 +46,7 @@ export default {
     },
 
     created() {
-        // this.keeplogin();
+        this.keeplogin();
     },
     watch: {
         $route(to, from) {

@@ -43,15 +43,15 @@ class UserController extends BaseController {
 
             }
             // Token
-            let userToken = {
-                name: userInfo.username
-            }
-            const token = await this.service.token.setToken(userToken)
+            // let userToken = {
+            //     name: userInfo.username
+            // }
+            // const token = await this.service.token.setToken(userToken)
             ctx.body = {
                 code: 200,
                 userInfo,
                 msg: '注册成功',
-                token
+                // token
             }
 
         } else {
@@ -95,15 +95,15 @@ class UserController extends BaseController {
                     year: data.year
                 }
                 // Token
-                let userToken = {
-                    name: userInfo.username
-                }
+                // let userToken = {
+                //     name: userInfo.username
+                // }
                 const token = await this.service.token.setToken(userToken)
                 ctx.body = {
                     code: 200,
                     msg: '登录成功',
                     userInfo,
-                    token
+                    // token
                 }
             }
         }

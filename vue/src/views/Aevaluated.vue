@@ -41,7 +41,7 @@ export default {
 
     methods: {
         async addCard(id) {
-            if (!this.token) {
+            if (!this.userName) {
                 this.$router.push({ name: "Login" });
                 return;
             }

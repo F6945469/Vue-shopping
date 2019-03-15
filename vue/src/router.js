@@ -71,18 +71,25 @@ const TITLE = {
 
 router.beforeEach((to, from, next) => {
     document.title = TITLE[to.name]
-    if (to.meta.requireAuth === false) { 
-        /* 
-          从Vuex拿出token码，说明已登陆
-        */
-        if (store.state.token) {
-            next({path: '/home',})
-        } else {
-            next() 
-        }
-    } else { 
-        next();
+    // if (to.meta.requireAuth === false) { 
+    //     /* 
+    //       从Vuex拿出token码，说明已登陆
+    //     */
+    //     if (store.state.token) {
+    //         next({path: '/home',})
+    //     } else {
+    //         next() 
+    //     }
+    // } else { 
+    //     next();
+    // }
+     // 如果已经登录了就不让进这个页面
+     if (store.state.userName && to.meta.requireAuth === false) {
+        next({ path: '/home' })
+    } else {
+        next()
     }
+    
 })
 
 

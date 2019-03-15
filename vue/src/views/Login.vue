@@ -118,7 +118,7 @@ export default {
                     const {data} = await this.Api.register(this.nickname,this.password,this.verifyTxt)
                     if (data.code == 200) {
                         this.setName(data.userInfo)
-                        this.setToken(data.token)
+                        // this.setToken(data.token)
                         setTimeout(() => {
                             this.$router.go(-1)
                         }, 1500);
@@ -146,7 +146,7 @@ export default {
                     const {data} = await this.Api.login(this.nickname,this.password,this.verifyTxt)
                     if (data.code == 200) {
                         this.setName(data.userInfo)
-                        this.setToken(data.token)
+                        // this.setToken(data.token)
                         setTimeout(() => {
                             this.$router.go(-1)
                         }, 1500);
