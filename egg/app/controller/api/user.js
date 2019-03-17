@@ -98,7 +98,7 @@ class UserController extends BaseController {
                 // let userToken = {
                 //     name: userInfo.username
                 // }
-                const token = await this.service.token.setToken(userToken)
+                // const token = await this.service.token.setToken(userToken)
                 ctx.body = {
                     code: 200,
                     msg: '登录成功',
