@@ -129,15 +129,20 @@ export default {
 
         async getShopList() {
             try {
-                this.showFlag = true;
-                const { data } = await this.Api.getCard();
-                if (data.code == -10000) {
-                    this.isLogin = true;
-                    this.showFlag = false;
-                } else {
-                    this.showFlag = false;
-                    this.shopList = data.shopList;
+                if (this.userName) {
+                    this.showFlag = true;
+                    const { data } = await this.Api.getCard();
+                    if (data.code == -10000) {
+                        this.isLogin = true;
+                        this.showFlag = false;
+                    } else {
+                        this.showFlag = false;
+                        this.shopList = data.shopList;
+                    }
+                } else  {
+                     this.showFlag = false;
                 }
+                
             } catch (error) {
                 this.$toast("网络连接失败");
                 this.showFlag = false;
