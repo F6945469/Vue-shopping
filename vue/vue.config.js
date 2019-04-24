@@ -18,9 +18,10 @@ module.exports = {
     devServer: {
         port: 8090,
         open: false, // 是否自动打开浏览器页面
+        host: '0.0.0.0',
         proxy: {
             '/api': {
-                target: 'http://localhost:3000',
+                target: 'http://localhost:7001',
                 ws: true,
                 changeOrigin: true,  //是否跨域
                 pathRewrite: {
