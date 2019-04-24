@@ -3,6 +3,7 @@
 # shoppingMall-VUE
 
 > 一个基于 **<abbr title="Hyper Text Markup Language">vue2.5 + egg.js + mongodb + vant </abbr>** 的电商webapp网站
+访问开发环境 http://101.132.188.203:8090
 
 
 ## 声明
