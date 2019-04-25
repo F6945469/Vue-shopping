@@ -77,7 +77,7 @@ const getRandomInt = function (min, max) {
  * @return Function 延迟执行的方法
  */
 // atleast要大于dalay
-const throttle = (fn, dalay = 1000) => {
+const throttle = (fn, dalay, atleast = 0) => {
     let timer = null
     let previous = null
     return (...args) => {
